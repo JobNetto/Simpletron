@@ -2,7 +2,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <iomanip>
+#include <exception>
 
+using std::exception;
 using namespace std;
 
 class Simpletron
@@ -116,8 +118,7 @@ void Simpletron::ORead()
 
 void Simpletron::OWrite()
 {
-	int p = memory[operand];
-	cout << memory[operand];
+		cout << memory[operand];
 }
 
 void Simpletron::OLoad()
@@ -177,11 +178,11 @@ void Simpletron::OHalt()
 void Simpletron::Run()
 {
 
-	int j = 0;
+	
 	if(memory[0] == 0)
 	{
 		int op;
-		
+		int j = 0;	
 		do
 		{
 		cout << "?"; cin >> op;
@@ -200,7 +201,14 @@ void Simpletron::Run()
 		instructionRegister = memory[counter];
 		counter++;
 		Decodifica();
-		SelecionarOperacao();
+		try
+		{
+			SelecionarOperacao();
+		}catch(exception)
+		{
+			cout << "Ocorreu um erro inesperado! Reinicei o processo." << endl;
+		}
+		
 	}
 	
 	ImprimirMemoria();
