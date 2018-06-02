@@ -36,6 +36,8 @@ private:
 	void OGotoIfN();
 	void OGotoIfZ();
 	void OHalt();
+	void OInc();
+	void ODec();
 public:
 	Simpletron();	
 	void Run();
@@ -68,19 +70,21 @@ void Simpletron::SelecionarOperacao( )
 {
 	switch (operationCode)
 	{
-	case 10: ORead(); break;
-	case 11:OWrite(); break;
-	case 20: OLoad(); break;
-	case 21:OStore(); break;
-	case 30:OAdd(); break;
-	case 31:OSub(); break;
-	case 32:ODiv(); break;
-	case 33:OMul(); break;
-	case 40:OGoto(); break;
-	case 41:OGotoIfN(); break;
-	case 42:OGotoIfZ(); break;
-	case 43:OHalt(); break;
-	default:break;
+		case 10:ORead(); break;
+		case 11:OWrite(); break;
+		case 20:OLoad(); break;
+		case 21:OStore(); break;
+		case 30:OAdd(); break;
+		case 31:OSub(); break;
+		case 32:ODiv(); break;
+		case 33:OMul(); break;
+		case 40:OGoto(); break;
+		case 41:OGotoIfN(); break;
+		case 42:OGotoIfZ(); break;
+		case 43:OHalt(); break;
+		case 50:OInc();break;
+		case 51:ODec();break;
+		default:break;
 	}
 }
 
@@ -175,6 +179,17 @@ void Simpletron::OHalt()
 {
 	counter = 100;
 }
+
+void Simpletron::OInc()
+{
+	accumulador+=1;
+}
+
+void Simpletron::ODec()
+{
+	accumulador-=1;
+}
+
 void Simpletron::Run()
 {
 
@@ -191,8 +206,6 @@ void Simpletron::Run()
 				j++;
 
 		} while (op > 0);
-	
-
 	}
 	
 	
@@ -201,13 +214,9 @@ void Simpletron::Run()
 		instructionRegister = memory[counter];
 		counter++;
 		Decodifica();
-		try
-		{
+		
 			SelecionarOperacao();
-		}catch(exception)
-		{
-			cout << "Ocorreu um erro inesperado! Reinicei o processo." << endl;
-		}
+		
 		
 	}
 	
